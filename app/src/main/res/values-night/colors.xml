@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="color_primary">#212121</color>
+    <color name="color_primary_variant">#000000</color>
+    <color name="color_secondary">#FF5823</color>
+    <color name="color_secondary_variant">#FF7043</color>
+
+    <color name="color_background">#000000</color>
+    <color name="color_surface">#101010</color>
+    <color name="color_error">#ad1457</color>
+
+    <color name="color_on_primary">#ffffff</color>
+    <color name="color_on_secondary">#212121</color>
+    <color name="color_on_background">#E0E0E0</color>
+    <color name="color_on_surface">#BDBDBD</color>
+    <color name="color_on_error">#000000</color>
+
+    <color name="color_event_time">@color/color_secondary</color>
+    <color name="color_drawable_tint">#ffd600</color>
+</resources>

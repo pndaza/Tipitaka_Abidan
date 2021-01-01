@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/setting_rootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:cardUseCompatPadding="true">
+
+        <RadioGroup
+            android:id="@+id/rg_theme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <RadioButton
+                android:id="@+id/radio_theme_day"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/themeDay" />
+
+            <RadioButton
+                android:id="@+id/radio_theme_night"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/themeNight" />
+
+            <RadioButton
+                android:id="@+id/radio_theme_night_full"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/themeNightFull" />
+
+        </RadioGroup>
+
+    </androidx.cardview.widget.CardView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+    <org.sufficientlysecure.htmltextview.HtmlTextView
+        android:id="@+id/tv_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@android:style/TextAppearance.Medium" />
+    </ScrollView>
+</LinearLayout>

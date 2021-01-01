@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Tipitaka Abidan</string>
+    <string name="app_name_mm">တိပိဋက ပါဠိ-မြန်မာ အဘိဓာန်</string>
+    <string name="title_home">Home</string>
+    <string name="title_favourite">Favourites</string>
+    <string name="title_favourite_mm">စိတ်ကြိုက်မှတ်သားမှုများ</string>
+    <string name="title_recent">Recent</string>
+    <string name="title_recent_mm">လက်တလော ကြည့်ရှုမှုများ</string>
+    <string name="title_setting">Settings</string>
+    <string name="title_setting_mm">ပြင်ဆင်မွမ်းမံမှုနှင့် သိမှတ်ဖွယ်</string>
+    <string name="title_search">Search</string>
+    <string name="title_search_mm">ကြည့်လိုရာပုဒ် ရိုက်ထည့်ရှာဖွေ</string>
+    <string name="search_hint">ရှာလိုသောပုဒ်</string>
+    <string name="empty_favourite">စိတ်ကြိုက်သိမ်းမှတ်ထားသော ပုဒ်များ မရှိသေးပါ။</string>
+    <string name="empty_recent">လက်တလော ကြည့်ရှုထားသော ပုဒ်များ မရှိသေးပါ။</string>
+    <string name="start_with">အစတူ</string>
+    <string name="anywhere">နေရာမရွေး</string>
+    <string name="themeDay">နေ့ (နောက်ခံအဖြူ စာလုံးမဲ)</string>
+    <string name="themeNight">ည (နောက်ခံအမဲ စာလုံးဖြူ -ပီဒီအက် မပါ)</string>
+    <string name="themeNightFull">ည (နောက်ခံအမဲ စာလုံးဖြူ -အားလုံး)</string>
+
+</resources>

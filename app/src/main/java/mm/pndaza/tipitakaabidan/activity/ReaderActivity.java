@@ -1,7 +1,6 @@
 package mm.pndaza.tipitakaabidan.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,12 +19,18 @@ import mm.pndaza.tipitakaabidan.R;
 import mm.pndaza.tipitakaabidan.database.DBOpenHelper;
 import mm.pndaza.tipitakaabidan.model.Word;
 import mm.pndaza.tipitakaabidan.utils.MDetect;
+import mm.pndaza.tipitakaabidan.utils.ScrollMode;
 import mm.pndaza.tipitakaabidan.utils.SharePref;
 
 public class ReaderActivity extends AppCompatActivity {
     private static final String TAG = "ReaderActivity";
-    Word word;
-    PDFView pdfView;
+    private Word word;
+    private PDFView pdfView;
+    private String assetName;
+    private SharePref sharePref;
+    private ScrollMode scrollMode;
+    private boolean nightMode;
+    private int currentPage;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,24 +52,23 @@ public class ReaderActivity extends AppCompatActivity {
         }
 
         setTitle(MDetect.getDeviceEncodedText(word.getBookName()));
-        String filename = "books" + File.separator + word.getBookid() + ".pdf";
+        assetName = "books" + File.separator + word.getBookid() + ".pdf";
 
         manageRecent(word.getId());
 
-        boolean nightMode = false;
-        if(SharePref.getInstance(this).getPrefNightModeState() == 2){
+        currentPage = word.getPageNumber() - 1;
+
+        sharePref = SharePref.getInstance(this);
+        scrollMode = sharePref.getScrollMode();
+        nightMode = false;
+        if(sharePref.getNightMode() == 2){
             nightMode = true;
         }
 
         pdfView = findViewById(R.id.pdfView);
-        pdfView.fromAsset(filename)
-                .enableSwipe(true) // allows to block changing pages using swipe
-                .swipeHorizontal(false)
-                .defaultPage(word.getPageNumber() - 1)
-                .scrollHandle(new DefaultScrollHandle(this))
-                .pageFitPolicy(FitPolicy.WIDTH)
-                .nightMode(nightMode)
-                .load();
+
+        loadPdf();
+
 
     }
 
@@ -77,7 +81,7 @@ public class ReaderActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_favourite, menu);
+        inflater.inflate(R.menu.menu_reader, menu);
         MenuItem fav = menu.findItem(R.id.menu_favourite);
         setIcon(fav); // set icon based on bookmark exist ot not
         return true;
@@ -89,6 +93,10 @@ public class ReaderActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menu_favourite:
                 manageFavourites(item);
+                return true;
+            case R.id.menu_scroll_mode:
+                swapIcon(item);
+                changePageMode();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -136,4 +144,42 @@ public class ReaderActivity extends AppCompatActivity {
     private void addToRecent(int id) {
         DBOpenHelper.getInstance(this).addToRecent(id);
     }
+
+    private void swapIcon(MenuItem item) {
+        if (scrollMode == ScrollMode.vertical) {
+            item.setIcon(getResources().getDrawable(R.drawable.ic_baseline_swap_horiz_24));
+        } else {
+            item.setIcon(getResources().getDrawable(R.drawable.ic_baseline_swap_vert_24));
+        }
+
+    }
+
+    private void changePageMode() {
+
+        currentPage = pdfView.getCurrentPage();
+        if (scrollMode == ScrollMode.vertical) {
+            scrollMode = ScrollMode.horizontal;
+        } else {
+            scrollMode = ScrollMode.vertical;
+        }
+        sharePref.setScrollMode(scrollMode);
+
+        loadPdf();
+
+    }
+
+    private void loadPdf() {
+        pdfView.fromAsset(assetName)
+                .defaultPage(currentPage)
+                .enableSwipe(true)
+                .pageFitPolicy(scrollMode == ScrollMode.horizontal ? FitPolicy.BOTH : FitPolicy.WIDTH)
+                .swipeHorizontal(scrollMode == ScrollMode.horizontal)
+                .pageSnap(scrollMode == ScrollMode.horizontal)
+                .autoSpacing(scrollMode == ScrollMode.horizontal)
+                .pageFling(scrollMode == ScrollMode.horizontal)
+                .scrollHandle(new DefaultScrollHandle(this))
+                .nightMode(nightMode)
+                .load();
+    }
+
 }

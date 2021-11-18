@@ -60,7 +60,7 @@ public class SettingFragment extends Fragment {
 
     private void initView( RadioGroup radioGroupTheme){
         SharePref sharePref = SharePref.getInstance(this.getContext());
-        int nightModeState = sharePref.getPrefNightModeState();
+        int nightModeState = sharePref.getNightMode();
 
         if(nightModeState == 0){
             radioGroupTheme.check(R.id.radio_theme_day);
@@ -87,7 +87,7 @@ public class SettingFragment extends Fragment {
 
                 break;
         }
-        sharePref.setPrefNightModeState(nightModeState);
+        sharePref.setNightMode(nightModeState);
         onSettingChangeListener.onChangeListener();
     }
 

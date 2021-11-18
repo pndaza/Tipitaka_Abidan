@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="color_primary">#0000ff</color>
-    <color name="color_primary_variant">#0000b3</color>
-    <color name="color_secondary">#ff3399</color>
-    <color name="color_secondary_variant">#e60073</color>
+    <color name="color_primary">#124C14</color>
+    <color name="color_primary_variant">#124C14</color>
+    <color name="color_secondary">#FF5722</color>
+    <color name="color_secondary_variant">#FD3D00</color>
 
     <color name="color_background">#ffffff</color>
     <color name="color_surface">#ffffff</color>

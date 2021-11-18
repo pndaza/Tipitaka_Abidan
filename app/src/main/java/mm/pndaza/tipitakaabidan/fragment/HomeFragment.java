@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,7 +44,6 @@ public class HomeFragment extends Fragment implements BookAdapter.OnItemClickLis
 
         initListView(view);
 
-
     }
 
     @Override
@@ -63,8 +63,8 @@ public class HomeFragment extends Fragment implements BookAdapter.OnItemClickLis
         ArrayList<Book> books = DBOpenHelper.getInstance(context).getBooks();
         BookAdapter adapter = new BookAdapter(books, this);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        recyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
+        recyclerView.setLayoutManager(new GridLayoutManager(context, getGridCount()));
+//        recyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
 
     }
 
@@ -77,5 +77,14 @@ public class HomeFragment extends Fragment implements BookAdapter.OnItemClickLis
     @Override
     public void onItemClick(Book book) {
         onBookChoiceListener.onBookChoice(book);
+    }
+
+    private int getGridCount(){
+        boolean tabletSize = getResources().getBoolean(R.bool.isTablet);
+        if (tabletSize) {
+            return 3;
+        } else {
+            return 2;
+        }
     }
 }

@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
+import mm.pndaza.tipitakaabidan.data.Constants;
 import mm.pndaza.tipitakaabidan.model.Book;
 import mm.pndaza.tipitakaabidan.model.Favourite;
 import mm.pndaza.tipitakaabidan.model.Recent;
@@ -15,9 +16,9 @@ import mm.pndaza.tipitakaabidan.model.Word;
 public class DBOpenHelper extends SQLiteOpenHelper {
 
     private static DBOpenHelper sInstance;
-    private static final String DATABASE_PATH = "/databases/";
-    private static final String DATABASE_NAME = "tipidict.db";
-    private static final int DATABASE_VERSION = 1;
+//    private static final String DATABASE_PATH = "/databases/";
+//    private static final String DATABASE_NAME = "tipidict.db";
+//    private static final int DATABASE_VERSION = 1;
 
     private static final String TAG = "DBOpenHelper";
 
@@ -31,9 +32,9 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     }
 
     private DBOpenHelper(Context context) {
-        super(context, context.getFilesDir() + DATABASE_PATH + DATABASE_NAME, null, DATABASE_VERSION);
+        super(context, context.getFilesDir() + "/databases/"
+                + Constants.DATABASE_FILE_NAME, null, Constants.DATABASE_VERSION);
     }
-
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {

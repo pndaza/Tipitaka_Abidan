@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnBo
         setTitle(MDetect.getDeviceEncodedText(getString(R.string.app_name)));
 
         // load theme
-        if (SharePref.getInstance(this).getPrefNightModeState() == 0) {
+        if (SharePref.getInstance(this).getNightMode() == 0) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);

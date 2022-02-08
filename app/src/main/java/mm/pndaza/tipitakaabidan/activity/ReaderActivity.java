@@ -1,5 +1,8 @@
 package mm.pndaza.tipitakaabidan.activity;
 
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,6 +17,8 @@ import com.github.barteksc.pdfviewer.util.FitPolicy;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 import mm.pndaza.tipitakaabidan.R;
 import mm.pndaza.tipitakaabidan.database.DBOpenHelper;
@@ -26,7 +31,8 @@ public class ReaderActivity extends AppCompatActivity {
     private static final String TAG = "ReaderActivity";
     private Word word;
     private PDFView pdfView;
-    private String assetName;
+//    private String assetName;
+    private String pdfFileName;
     private SharePref sharePref;
     private ScrollMode scrollMode;
     private boolean nightMode;
@@ -52,7 +58,7 @@ public class ReaderActivity extends AppCompatActivity {
         }
 
         setTitle(MDetect.getDeviceEncodedText(word.getBookName()));
-        assetName = "books" + File.separator + word.getBookid() + ".pdf";
+        pdfFileName = word.getBookid() + ".pdf";
 
         manageRecent(word.getId());
 
@@ -169,17 +175,42 @@ public class ReaderActivity extends AppCompatActivity {
     }
 
     private void loadPdf() {
-        pdfView.fromAsset(assetName)
-                .defaultPage(currentPage)
-                .enableSwipe(true)
-                .pageFitPolicy(scrollMode == ScrollMode.horizontal ? FitPolicy.BOTH : FitPolicy.WIDTH)
-                .swipeHorizontal(scrollMode == ScrollMode.horizontal)
-                .pageSnap(scrollMode == ScrollMode.horizontal)
-                .autoSpacing(scrollMode == ScrollMode.horizontal)
-                .pageFling(scrollMode == ScrollMode.horizontal)
-                .scrollHandle(new DefaultScrollHandle(this))
-                .nightMode(nightMode)
-                .load();
+        try {
+            Context context = createPackageContext("mm.pndaza.tipitakaabidan", 0);
+            AssetManager assetManager = context.getAssets();
+
+            InputStream inputStream = assetManager.open("books" + File.separator
+                    + pdfFileName);
+
+            pdfView.fromStream(inputStream)
+                    .defaultPage(currentPage)
+                    .enableSwipe(true)
+                    .pageFitPolicy(scrollMode == ScrollMode.horizontal
+                            ? FitPolicy.BOTH : FitPolicy.WIDTH)
+                    .swipeHorizontal(scrollMode == ScrollMode.horizontal)
+                    .pageSnap(scrollMode == ScrollMode.horizontal)
+                    .autoSpacing(scrollMode == ScrollMode.horizontal)
+                    .pageFling(scrollMode == ScrollMode.horizontal)
+                    .scrollHandle(new DefaultScrollHandle(this))
+                    .nightMode(nightMode)
+                    .load();
+
+
+        } catch (PackageManager.NameNotFoundException | IOException e) {
+            e.printStackTrace();
+        }
+
+//        pdfView.fromAsset(assetName)
+//                .defaultPage(currentPage)
+//                .enableSwipe(true)
+//                .pageFitPolicy(scrollMode == ScrollMode.horizontal ? FitPolicy.BOTH : FitPolicy.WIDTH)
+//                .swipeHorizontal(scrollMode == ScrollMode.horizontal)
+//                .pageSnap(scrollMode == ScrollMode.horizontal)
+//                .autoSpacing(scrollMode == ScrollMode.horizontal)
+//                .pageFling(scrollMode == ScrollMode.horizontal)
+//                .scrollHandle(new DefaultScrollHandle(this))
+//                .nightMode(nightMode)
+//                .load();
     }
 
 }

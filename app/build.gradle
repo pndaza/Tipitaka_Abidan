@@ -21,6 +21,8 @@ android {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
+    assetPacks = [":install_time_asset_pack"]
+
 }
 
 dependencies {

@@ -7,8 +7,8 @@ android {
         applicationId "mm.pndaza.tipitakaabidan"
         minSdkVersion 15
         targetSdkVersion 30
-        versionCode 3
-        versionName "01_01_2022"
+        versionCode 4
+        versionName "21_08_2022"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

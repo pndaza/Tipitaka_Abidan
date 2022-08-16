@@ -77,7 +77,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     public Cursor getWords(String bookid) {
         return getReadableDatabase().rawQuery(
-                "SELECT rowid, word FROM words WHERE bookid = '" + bookid + "' ORDER BY rowid ASC", null);
+                "SELECT id, word FROM words WHERE book_id = '" + bookid + "' ORDER BY id ASC", null);
     }
 
     public void getDetail(Word word) {
@@ -86,10 +86,10 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         String bookid = "1";
         int pageNumber = 1;
         Cursor cursor = getReadableDatabase().rawQuery(
-                "SELECT bookid, page FROM words WHERE rowid = " + word.getId(), null);
+                "SELECT book_id, page_number FROM words WHERE id = " + word.getId(), null);
         if (cursor != null && cursor.moveToFirst()) {
-            bookid = cursor.getString(cursor.getColumnIndex("bookid"));
-            pageNumber = cursor.getInt(cursor.getColumnIndex("page"));
+            bookid = cursor.getString(cursor.getColumnIndex("book_id"));
+            pageNumber = cursor.getInt(cursor.getColumnIndex("page_number"));
         }
         cursor.close();
 
@@ -107,7 +107,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     public String getWord(int id) {
         String word = "";
-        Cursor cursor = getReadableDatabase().rawQuery("SELECT word FROM words WHERE rowid = " + id, null);
+        Cursor cursor = getReadableDatabase().rawQuery("SELECT word FROM words WHERE id = " + id, null);
         if (cursor != null && cursor.moveToFirst()) {
             word = cursor.getString(cursor.getColumnIndex("word"));
         }
@@ -122,12 +122,12 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         String bookid = null;
         int pageNumber = 0;
         Cursor cursor = getReadableDatabase().rawQuery
-                ("SELECT rowid,word, bookid,page FROM words WHERE word = '" + lookup + "'", null);
+                ("SELECT id, word, book_id, page_number FROM words WHERE word = '" + lookup + "'", null);
         if (cursor != null && cursor.moveToFirst()) {
-            id = cursor.getInt(cursor.getColumnIndex("rowid"));
+            id = cursor.getInt(cursor.getColumnIndex("id"));
             str_word = cursor.getString(cursor.getColumnIndex("word"));
-            bookid = cursor.getString(cursor.getColumnIndex("bookid"));
-            pageNumber = cursor.getInt(cursor.getColumnIndex("page"));
+            bookid = cursor.getString(cursor.getColumnIndex("book_id"));
+            pageNumber = cursor.getInt(cursor.getColumnIndex("page_number"));
 
             word = new Word(id,str_word);
             word.setBookid(bookid);

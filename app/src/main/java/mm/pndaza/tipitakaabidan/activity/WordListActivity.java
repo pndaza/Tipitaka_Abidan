@@ -63,7 +63,7 @@ public class WordListActivity extends AppCompatActivity implements WordAdapter.O
             Cursor cursor = DBOpenHelper.getInstance(context).getWords(book);
             if (cursor != null && cursor.moveToFirst()) {
                 do {
-                    id = cursor.getInt(cursor.getColumnIndex("rowid"));
+                    id = cursor.getInt(cursor.getColumnIndex("id"));
                     word = cursor.getString(cursor.getColumnIndex("word"));
                     words.add(new Word(id, word));
                 } while (cursor.moveToNext());

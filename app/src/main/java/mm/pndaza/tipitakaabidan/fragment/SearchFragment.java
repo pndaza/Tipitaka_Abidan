@@ -145,11 +145,11 @@ public class SearchFragment extends Fragment implements WordAdapter.OnItemClickL
         int id;
         String word;
         Cursor cursor = sqLiteDatabase.rawQuery(
-                "SELECT rowid, word FROM words WHERE word = '" + query + "' ORDER BY word ASC", null);
+                "SELECT id, word FROM words WHERE word = '" + query + "' ORDER BY word ASC", null);
         if (cursor != null && cursor.moveToFirst()) {
             words.clear();
             do {
-                id = cursor.getInt(cursor.getColumnIndex("rowid"));
+                id = cursor.getInt(cursor.getColumnIndex("id"));
                 word = cursor.getString(cursor.getColumnIndex("word"));
                 words.add(new Word(id, word));
             } while (cursor.moveToNext());
@@ -178,16 +178,16 @@ public class SearchFragment extends Fragment implements WordAdapter.OnItemClickL
                 int id;
                 String word;
                 String normalizedQuery = PaliTextNormalizer.normalize(querys[0]);
-                String whereClause = "WHERE word LIKE '" + normalizedQuery + "%' ORDER BY rowid ASC";
+                String whereClause = "WHERE word LIKE '" + normalizedQuery + "%' ORDER BY id ASC";
                 if (idOfSearchOption == R.id.radio_btn_anywhere) {
                     whereClause = "WHERE word LIKE '%" + normalizedQuery + "%'";
                 }
                 Cursor cursor = sqLiteDatabase.rawQuery(
-                        "SELECT rowid, word FROM words " + whereClause, null);
+                        "SELECT id, word FROM words " + whereClause, null);
                 if (cursor != null && cursor.moveToFirst()) {
                     words.clear();
                     do {
-                        id = cursor.getInt(cursor.getColumnIndex("rowid"));
+                        id = cursor.getInt(cursor.getColumnIndex("id"));
                         word = cursor.getString(cursor.getColumnIndex("word"));
                         words.add(new Word(id, word));
                         publishProgress(words.size());
